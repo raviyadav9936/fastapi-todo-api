@@ -1,4 +1,4 @@
-from modules.demo.crud import create_user,get_data,update_record,delete_record
+from modules.demo.crud import create_user,get_data,update_record,delete_record,get_data_with_id
 from fastapi import APIRouter,Depends
 from database.database import get_db
 from sqlalchemy.orm import Session
@@ -15,6 +15,11 @@ def add_data(schema:AddUserSchema,db:Session=Depends(get_db)):
 @router.get('/get_user_data')
 def user_data(db:Session=Depends(get_db)):
     res=get_data(db)
+    return res
+
+@router.get('/get_record')
+def fetch_record_id(id:int,db:Session=Depends(get_db)):
+    res=get_data_with_id(id,db)
     return res
 
 @router.put('/update_user')
