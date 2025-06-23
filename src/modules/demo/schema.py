@@ -3,3 +3,7 @@ from pydantic import BaseModel
 class AddUserSchema(BaseModel):
     name:str
     email:str
+    
+class UpdateSchema(BaseModel):
+    name:str
+    email:str    

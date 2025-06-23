@@ -1,4 +1,4 @@
-from sqlalchemy import Integer,String,Column
+from sqlalchemy import Integer,String,Column,Boolean,TIMESTAMP, func
 from database.database import Base
 
 class User(Base):
@@ -7,3 +7,6 @@ class User(Base):
     id=Column(Integer,primary_key=True,index=True)
     name=Column(String(50))
     email=Column(String(100),unique=True,index=True)
+    tstatus=Column(Boolean,default=True)
+    created_at=Column(TIMESTAMP,server_default=func.now())
+    updated_at=Column(TIMESTAMP)
