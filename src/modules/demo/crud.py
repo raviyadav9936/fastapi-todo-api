@@ -2,6 +2,7 @@ from database.models import User
 from fastapi import HTTPException
 import traceback
 from datetime import datetime
+from modules.auth.oauth import Hash
 
 
 def create_user(schema, db):
@@ -17,6 +18,8 @@ def create_user(schema, db):
         new_user = User(
             name=schema.name,
             email=schema.email,
+            user_name=schema.user_name,
+            password=Hash.bcrypt(schema.password),
             tstatus=True
         )
         db.add(new_user)
@@ -28,7 +31,9 @@ def create_user(schema, db):
             'data': {
                 'id': new_user.id,
                 'name': new_user.name,
-                'email': new_user.email
+                'email': new_user.email,
+                'user_name':new_user.user_name,
+                'password':new_user.password
             }
         }
 

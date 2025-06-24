@@ -10,3 +10,5 @@ class User(Base):
     tstatus=Column(Boolean,default=True)
     created_at=Column(TIMESTAMP,server_default=func.now())
     updated_at=Column(TIMESTAMP)
+    password=Column(String(250))
+    user_name=Column(String(50))

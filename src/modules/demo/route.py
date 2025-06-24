@@ -3,9 +3,13 @@ from fastapi import APIRouter,Depends
 from database.database import get_db
 from sqlalchemy.orm import Session
 from modules.demo.schema import AddUserSchema,UpdateSchema 
+from modules.auth.oauth import JWTBearer
+from typing import Annotated
 
-router=APIRouter(prefix='/user_record')
-
+router=APIRouter(
+    prefix='/user_record'
+)
+user_depndency=Annotated[dict,Depends(JWTBearer())]
 
 @router.post('/add_user')
 def add_data(schema:AddUserSchema,db:Session=Depends(get_db)):
@@ -13,12 +17,12 @@ def add_data(schema:AddUserSchema,db:Session=Depends(get_db)):
     return res
 
 @router.get('/get_user_data')
-def user_data(db:Session=Depends(get_db)):
+def user_data(user:user_depndency,db:Session=Depends(get_db)):
     res=get_data(db)
     return res
 
 @router.get('/get_record')
-def fetch_record_id(id:int,db:Session=Depends(get_db)):
+def fetch_record_id(user:user_depndency,id:int,db:Session=Depends(get_db)):
     res=get_data_with_id(id,db)
     return res
 
