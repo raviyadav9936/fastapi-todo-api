@@ -88,7 +88,7 @@ def update_record(id,schema,db):
         
         record.name=schema.name,
         record.email=schema.email,
-        record.updated_at=datetime.utcnow()
+        record.updated_at=datetime.now()
         
         db.commit()
         db.refresh(record)
